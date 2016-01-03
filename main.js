@@ -6,6 +6,8 @@ var myOrb_color_collision = "goldenrod";
 
 var myOrb_speed = 50; // 初期速度
 var myOrb_degree = 0; // 初期角度 (0-359 度表記)
+var collision_limit = 10; // この回数だけ衝突すると終了
+var collision_num = 0;
 
 
 
@@ -34,6 +36,13 @@ orb.connect(function() {
         decelerateSpeed();
         changeDegree();
         orb.color(myOrb_color_collision);
+        collision_num++;
+        if(collision_num >= collision_limit) {
+          orb.color("firebrick");
+          orb.disconnect(function() {
+              console.log("end");
+          });
+        }
         setTimeout(function() {
             orb.color(myOrb_color_default);
         }, 3000);
