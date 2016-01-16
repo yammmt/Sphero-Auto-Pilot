@@ -52,7 +52,8 @@ tramp
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
@@ -128,4 +129,5 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-
+# Node Modules
+node_modules/

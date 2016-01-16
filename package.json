@@ -1,0 +1,23 @@
+{
+  "name": "sp-auto-pilot",
+  "version": "1.0.0",
+  "description": "簡潔な (最低限の) Sphero の自動操縦プログラム",
+  "main": "main.js",
+  "dependencies": {},
+  "devDependencies": {
+    "sphero": "^0.7.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yammmt/Sphero-Auto-Pilot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yammmt/Sphero-Auto-Pilot/issues"
+  },
+  "homepage": "https://github.com/yammmt/Sphero-Auto-Pilot#readme"
+}
