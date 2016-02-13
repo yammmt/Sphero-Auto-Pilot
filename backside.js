@@ -10,16 +10,17 @@ module.exports = {
     }
     events[eventName].push(fn);
   },
-  connect: function(orb, port, callback) {
-    orb = sphero(port);
+  connect: function(port, callback) {
+    var orb = sphero(port);
+    console.log(typeof orb);
     orb.connect(function() {
       orb.detectCollisions(); // 衝突判定を有効化
-      setTimeout(loop, loopInterval);
       callback(orb);
     });
     orb.on("collision", function() {
       raiseEvent("collision");
     });
+    return orb;
   }
 };
 

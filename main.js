@@ -1,10 +1,10 @@
 var backside = require("./backside");
 
 // 自分の Sphero の ID に置き換える
-var port = "/dev/tty.Sphero-YRW-AMP-SPP";
+var port = "COM7";
 var orbDefaultColor = "lightseagreen";
 var loopInterval = 1000;
-var orb;
+var orb = {};
 
 // 接続された時に呼び出されます。
 function connect() {
@@ -30,7 +30,8 @@ function collision() {
   // ここまで
 }
 
-backside.setLoopInterval(loopInterval);
-backside.connect(orb, port, connect);
+console.log(typeof orb);
+orb = backside.connect( port, connect);
+console.log(orb);
 backside.addEventListener("collision", collision);
 backside.addEventListener("loop", loop);
