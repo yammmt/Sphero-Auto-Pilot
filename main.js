@@ -30,8 +30,6 @@ function collision() {
   // ここまで
 }
 
-console.log(typeof orb);
 orb = backside.connect( port, connect);
-console.log(orb);
 backside.addEventListener("collision", collision);
 backside.addEventListener("loop", loop);

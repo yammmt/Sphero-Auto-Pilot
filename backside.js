@@ -12,7 +12,6 @@ module.exports = {
   },
   connect: function(port, callback) {
     var orb = sphero(port);
-    console.log(typeof orb);
     orb.connect(function() {
       orb.detectCollisions(); // 衝突判定を有効化
       callback(orb);
