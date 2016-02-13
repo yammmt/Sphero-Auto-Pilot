@@ -1,7 +1,7 @@
-// バックで難しい処理をします。
+// バックで環境設定などのややこしい処理をします。
 var sphero = require("sphero");
-var orb;
 
+var loopInterval = 1000;
 var events = {};
 module.exports = {
   addEventListener: function(eventName, fn) {
@@ -10,19 +10,23 @@ module.exports = {
     }
     events[eventName].push(fn);
   },
-  connect: function(port, callback) {
+  connect: function(orb, port, callback) {
     orb = sphero(port);
-    orb.connect(callback);
+    orb.connect(function() {
+      orb.detectCollisions(); // 衝突判定を有効化
+      setTimeout(loop, loopInterval);
+      callback(orb);
+    });
     orb.on("collision", function() {
-      raiseEvent("collision", orb);
+      raiseEvent("collision");
     });
   }
 };
 
-function raiseEvent(eventName, param) {
+function raiseEvent(eventName) {
   if (typeof events[eventName] !== "undefined") {
     events[eventName].forEach(i => {
-      i(param);
+      i();
     });
   }
 }
