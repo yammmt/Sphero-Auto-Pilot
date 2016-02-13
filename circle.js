@@ -4,7 +4,7 @@ var orb = sphero("/dev/tty.Sphero-YRW-AMP-SPP"); // 自分の Sphero の ID に�
 var myOrb_color_default = "chocolate";
 var myOrb_color_collision = "goldenrod";
 
-var myOrb_speed = 60; // 初期速度
+var myOrb_speed = 80; // 初期速度
 var myOrb_degree = 0; // 初期角度 (0-359 度表記)
 var degree_variation = 20; // 角度変化幅
 var collision_limit = 100; // この回数だけ衝突すると終了
@@ -19,11 +19,15 @@ orb.connect(function() {
 
     // 進行方向の変更
     function changeDegree() {
-        // myOrb_degree = (myOrb_degree+degree_variation)%360; // 右回り
-        myOrb_degree = myOrb_degree-degree_variation; // 左回り
-        if(myOrb_degree < 0) {
-          myOrb_degree = 360;
-        }
+      if(collision_num%2 == 0) {
+          myOrb_degree = (myOrb_degree+degree_variation)%360; // 右回り
+      }
+      else {
+          myOrb_degree = myOrb_degree-degree_variation; // 左回り
+          if(myOrb_degree < 0) {
+              myOrb_degree = 360;
+          }
+      }
     };
 
     // 衝突時に発生するイベント
