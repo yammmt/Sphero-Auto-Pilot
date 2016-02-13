@@ -5,10 +5,10 @@ var myOrb_color_default = "lightseagreen";
 var myOrb_color_collision = "goldenrod";
 var myOrb_color_back = "coral"
 
-var myOrb_speed = 100; // 初期速度
+var myOrb_speed = 255; // 初期速度
 var myOrb_degree = 0; // 初期角度 (0-359 度表記)
-var speed_accelerate = 30; // 速度上昇幅
-var speed_decelerate = 10; // 速度下降幅
+var speed_accelerate = 0; // 速度上昇幅
+var speed_decelerate = 0; // 速度下降幅
 var degree_variation = 30; // 角度変化幅
 var collision_limit = 100; // この回数だけ衝突すると終了
 var collision_num = 0;
