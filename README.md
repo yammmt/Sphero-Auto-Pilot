@@ -37,5 +37,12 @@ loopIntervalで指定した間隔（ミリ秒）で呼び出されます。
 
 衝突時に呼び出されます。
 
+## backside.js
+
+### move(power, deg)
+Spheroを動かします。
+degは、数値を指定すると角度、
+文字列を指定すると、「左 右 前 後」に動きます。
+
 ## License
 [MIT License](http://wisdommingle.com/mit-license/)

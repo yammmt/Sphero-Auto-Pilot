@@ -25,6 +25,28 @@ module.exports = {
       raiseEvent("collision");
     });
     return orb;
+  },
+  move: function(speed, deg) {
+    if (typeof deg === "number") {
+      orb.roll(speed, deg);
+    } else if (typeof deg === "string") {
+      var _deg = 0;
+      switch (deg) {
+        case "左":
+          _deg = 90;
+          break;
+        case "後":
+          _deg = 180;
+          break;
+        case "右":
+          _deg = 270;
+          break;
+        case "前":
+          _deg = 0;
+          break;
+      }
+      orb.roll(speed, _deg);
+    }
   }
 };
 
