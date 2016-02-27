@@ -11,7 +11,7 @@ function connect() {
   orb.color(orbDefaultColor);
   setTimeout(loop, loopInterval);
   // ここに処理を書きます
-    orb.roll(50,0);
+  orb.roll(50,0);
   // ここまで
 }
 
