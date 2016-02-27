@@ -19,7 +19,7 @@ module.exports = {
       setTimeout(function() {
         console.log("準備終了");
         orb.finishCalibration();
-	callback(orb);
+        callback(orb);
       }, 10000);
     });
     orb.on("collision", function() {
