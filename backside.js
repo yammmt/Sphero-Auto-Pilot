@@ -1,7 +1,6 @@
 // バックで環境設定などのややこしい処理をします。
 var sphero = require("sphero");
 
-var loopInterval = 1000;
 var events = {};
 module.exports = {
   addEventListener: function(eventName, fn) {
