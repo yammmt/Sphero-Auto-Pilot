@@ -2,7 +2,7 @@ var backside = require("./backside");
 
 // 自分の Sphero の ID に置き換える
 var port = "COM7";
-var orbDefaultColor = "lightseagreen";
+var orbDefaultColor = "orange";
 var loopInterval = 1000;
 var orb = {};
 
@@ -11,7 +11,7 @@ function connect() {
   orb.color(orbDefaultColor);
   setTimeout(loop, loopInterval);
   // ここに処理を書きます
-  
+    orb.roll(50,0);
   // ここまで
 }
 

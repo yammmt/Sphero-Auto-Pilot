@@ -14,7 +14,13 @@ module.exports = {
     var orb = sphero(port);
     orb.connect(function() {
       orb.detectCollisions(); // 衝突判定を有効化
-      callback(orb);
+      console.log("準備開始");	
+      orb.startCalibration(); // 位置関係の補正
+      setTimeout(function() {
+        console.log("準備終了");
+        orb.finishCalibration();
+	callback(orb);
+      }, 10000);
     });
     orb.on("collision", function() {
       raiseEvent("collision");
