@@ -3,7 +3,8 @@ var orb = sphero("COM4"); // 自分の Sphero の ID に置き換える
 
 var myOrb_color_default = "lightseagreen";
 var myOrb_color_collision = "goldenrod";
-var myOrb_color_back = "coral"
+var myOrb_color_back = "coral";
+var myOrb_color_endRotate = "green";
 
 var myOrb_speed = 100; // 初期速度
 var myOrb_degree = 0; // 初期角度 (0-359 度表記)
@@ -24,7 +25,8 @@ orb.connect(function() {
   orb.color(myOrb_color_default);
 
   orb.detectCollisions();
-  orb.streamImuAngles();
+  // 引数は、1秒に何回関数を呼ぶか。
+  orb.streamImuAngles(8);
 
   orb.on("imuAngles", onImuAngleChanged);
 
@@ -36,8 +38,10 @@ orb.connect(function() {
         console.log(getDiffAngle(collidedYawAngle, data.yawAngle.value[0]));
         console.log(": ", collidedYawAngle);
         console.log(": ", data.yawAngle.value[0]);
-        if (getDiffAngle(collidedYawAngle, data.yawAngle.value[0]) === 90) {
+        // Todo: #12
+        if (getDiffAngle(collidedYawAngle, data.yawAngle.value[0]) >= 90) {
           console.log("stop!");
+          orb.color(myOrb_color_endRotate);
           isCollideChecked = false;
           isCollided = false;
           setTimeout(onCollision, 1000);
@@ -63,8 +67,8 @@ orb.connect(function() {
     if (!isCollided) {
       isCollided = true;
       isCollideChecked = false;
-      console.log("collision");
-      orb.roll(0, 0);
+      orb.color(myOrb_color_collision);
+      orb.roll(0, deg);
       clearTimeout(setTimeoutId);
     }
   }
