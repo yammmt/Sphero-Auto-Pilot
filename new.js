@@ -35,11 +35,9 @@ orb.connect(function() {
       if (isCollideChecked) {
         deg = (deg + 15) % 360;
         orb.roll(1, deg);
-        console.log(getDiffAngle(collidedYawAngle, data.yawAngle.value[0]));
-        console.log(": ", collidedYawAngle);
-        console.log(": ", data.yawAngle.value[0]);
-        // Todo: #12
-        if (getDiffAngle(collidedYawAngle, data.yawAngle.value[0]) >= 90) {
+        var diffAngle = getDiffAngle(collidedYawAngle, data.yawAngle.value[0]);
+        console.log(diffAngle);
+        if (diffAngle >= 90 && diffAngle <= 180) {
           console.log("stop!");
           orb.color(myOrb_color_endRotate);
           isCollideChecked = false;
