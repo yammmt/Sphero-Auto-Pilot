@@ -6,19 +6,15 @@ var myOrb_color_collision = "goldenrod";
 var myOrb_color_back = "coral";
 var myOrb_color_endRotate = "green";
 
-var myOrb_speed = 100; // 初期速度
-var myOrb_degree = 0; // 初期角度 (0-359 度表記)
-var speed_accelerate = 0; // 速度上昇幅
-var speed_decelerate = 0; // 速度下降幅
-var degree_variation = 30; // 角度変化幅
-
-
 var isCollided = false;
 var isCollideChecked = false;
+var isRefreshing = false;
+
 var deg = 0;
 var collidedYawAngle = 0;
 
-var setTimeoutId = -1;
+var mainTimeoutId = -1;
+var refreshTimeoutId = -1;
 
 orb.connect(function() {
 
@@ -42,7 +38,7 @@ orb.connect(function() {
           orb.color(myOrb_color_endRotate);
           isCollideChecked = false;
           isCollided = false;
-          setTimeout(onCollision, 1000);
+          setTimeout(main, 1000);
         }
       } else {
         collidedYawAngle = data.yawAngle.value[0];
@@ -62,22 +58,33 @@ orb.connect(function() {
   
   function onCollision() {
     console.log("collision");
-    if (!isCollided) {
+    if (!isCollided && !isRefreshing) {
       isCollided = true;
       isCollideChecked = false;
       orb.color(myOrb_color_collision);
       orb.roll(0, deg);
-      clearTimeout(setTimeoutId);
+      clearTimeout(mainTimeoutId);
+      clearTimeout(refreshTimeoutId);
     }
   }
 
   // メインのループ関数
   function main() {
     if (!isCollided) {
-      console.log("speed : ", 100);
       orb.roll(100, deg);
-      setTimeoutId = setTimeout(main, 1000);
+      mainTimeoutId = setTimeout(main, 1000);
+      refreshTimeoutId = setTimeout(refresh, 5000);
     }
   }
   main();
+  
+  function refresh() {
+    isRefreshing = true;
+    orb.roll(100, (deg + 180) % 360);
+    setTimeout(function() {
+      orb.roll(0, deg);
+      isRefreshing = false;
+      main();
+    });
+  }
 });
