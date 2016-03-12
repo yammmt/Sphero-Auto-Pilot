@@ -18,19 +18,22 @@ function connect() {
   orb.color(orbDefaultColor);
   setTimeout(loop, loopInterval);
   // ここに処理を書きます
-  backside.move(100, angles[currentAnglePoint++], orb);
+  backside.move(255, angles[currentAnglePoint++], orb);
 
-  orb.streamVelocity();
+  orb.streamAccelerometer();
 
-  orb.on("velocity", function(data) {
-    graph.push(data.xVelocity.value);
-    graph.push(data.yVelocity.value);
+  orb.on("accelerometer", function(data) {
+    if (Math.abs(data.xAccel.value[0]) < 1000) {
+      console.log("止まっている");
+    } else {
+      console.log("動いている");
+    }
   });
 
   keypress(process.stdin);
   process.stdin.on("keypress", function(ch, key) {
     if (key.ctrl && key.name === "c") {
-      console.log(graph.join(","));
+      //console.log(graph.join(","));
       process.stdin.pause();
       process.exit();
     }
@@ -55,7 +58,7 @@ function collision() {
   setTimeout(function() {
     orb.color("green");
   }, 500);
-  backside.move(100, angles[currentAnglePoint++], orb);
+  backside.move(255, angles[currentAnglePoint++], orb);
 
   // ここまで
 }

@@ -15,8 +15,8 @@ module.exports = {
       orb.startCalibration(); // 位置関係の補正
       setTimeout(function() {
         console.log("準備終了");
-        orb.detectCollisions(); // 衝突判定を有効化
         orb.finishCalibration();
+        orb.detectCollisions(); // 衝突判定を有効化
         callback(orb);
       }, 10000);
     });
