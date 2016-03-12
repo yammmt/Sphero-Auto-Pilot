@@ -1,6 +1,6 @@
 // バックで環境設定などのややこしい処理をします。
 var sphero = require("sphero");
-
+var orb;
 var events = {};
 module.exports = {
   addEventListener: function(eventName, fn) {
@@ -10,7 +10,7 @@ module.exports = {
     events[eventName].push(fn);
   },
   connect: function(port, callback) {
-    var orb = sphero(port);
+    orb = sphero(port);
     orb.connect(function() {
       orb.detectCollisions(); // 衝突判定を有効化
       console.log("準備開始");	
