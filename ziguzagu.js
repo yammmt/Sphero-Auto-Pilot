@@ -15,7 +15,8 @@ function connect() {
   orb.color(orbDefaultColor);
   setTimeout(loop, loopInterval);
   // ここに処理を書きます
-  backside.move(255,angles[currentAnglePoint++], orb);
+  backside.move(255,angles[currentAnglePoint%5], orb);
+  currentAnglePoint++;
   // ここまで
 }
 
@@ -34,11 +35,11 @@ function collision() {
   setTimeout(function() {
     orb.color("green");
   }, 500);
-  backside.move(255,angles[currentAnglePoint++], orb);
-  
+  backside.move(255,angles[currentAnglePoint%5], orb);
+  currentAnglePoint++;
   // ここまで
 }
 
-orb = backside.connect( port, connect);
+orb = backside.connect(port, connect);
 backside.addEventListener("collision", collision);
 backside.addEventListener("loop", loop);
