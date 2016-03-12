@@ -1,12 +1,12 @@
 var backside = require("./backside");
 
 // 自分の Sphero の ID に置き換える
-var port = "COM7";
+var port = "/dev/tty.Sphero-YRW-AMP-SPP";
 var orbDefaultColor = "orange";
 var loopInterval = 1000;
 var orb = {};
 var angles = [
-  0, 90, 0, 270, 0
+  "前", "右", "前", "左", "前"
 ];
 var currentAnglePoint = 0;
 
