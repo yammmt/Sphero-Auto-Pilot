@@ -11,11 +11,11 @@ module.exports = {
   connect: function(port, callback) {
     var orb = sphero(port);
     orb.connect(function() {
-      orb.detectCollisions(); // 衝突判定を有効化
-      console.log("準備開始");	
+      console.log("準備開始");
       orb.startCalibration(); // 位置関係の補正
       setTimeout(function() {
         console.log("準備終了");
+        orb.detectCollisions(); // 衝突判定を有効化
         orb.finishCalibration();
         callback(orb);
       }, 10000);
