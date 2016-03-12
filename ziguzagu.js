@@ -5,13 +5,17 @@ var port = "COM7";
 var orbDefaultColor = "orange";
 var loopInterval = 1000;
 var orb = {};
+var angles = [
+  0, 90, 0, 270, 0
+];
+var currentAnglePoint = 0;
 
 // 接続された時に呼び出されます。
 function connect() {
   orb.color(orbDefaultColor);
   setTimeout(loop, loopInterval);
   // ここに処理を書きます
-  backside.move(50,"前");
+  backside.move(255,angles[currentAnglePoint++], orb);
   // ここまで
 }
 
@@ -26,6 +30,11 @@ function loop() {
 // 衝突時に呼び出されます。
 function collision() {
   // ここに処理を書きます
+  orb.color("red");
+  setTimeout(function() {
+    orb.color("green");
+  }, 500);
+  backside.move(255,angles[currentAnglePoint++], orb);
   
   // ここまで
 }

@@ -11,7 +11,7 @@ function connect() {
   orb.color(orbDefaultColor);
   setTimeout(loop, loopInterval);
   // ここに処理を書きます
-  backside.move(50,"前");
+  backside.move(50,"前", orb);
   // ここまで
 }
 
