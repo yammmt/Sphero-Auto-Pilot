@@ -2,12 +2,12 @@ var backside = require("./backside");
 var keypress = require("keypress");
 
 // 自分の Sphero の ID に置き換える
-var port = "COM7";
+var port = "/dev/tty.Sphero-YRW-AMP-SPP";
 var orbDefaultColor = "orange";
 var loopInterval = 1000;
 var orb = {};
 var angles = [
-  0, 90, 0, 270, 0
+  "前", "右", "前", "左", "前"
 ];
 var currentAnglePoint = 0;
 
@@ -18,7 +18,8 @@ function connect() {
   orb.color(orbDefaultColor);
   setTimeout(loop, loopInterval);
   // ここに処理を書きます
-  backside.move(255, angles[currentAnglePoint++], orb);
+  backside.move(255,angles[currentAnglePoint%5], orb);
+  currentAnglePoint++;
 
   orb.streamAccelerometer();
 
@@ -29,17 +30,6 @@ function connect() {
       console.log("動いている");
     }
   });
-
-  keypress(process.stdin);
-  process.stdin.on("keypress", function(ch, key) {
-    if (key.ctrl && key.name === "c") {
-      //console.log(graph.join(","));
-      process.stdin.pause();
-      process.exit();
-    }
-  });
-  process.stdin.setRawMode(true);
-  process.stdin.resume();
   // ここまで
 }
 
@@ -58,8 +48,8 @@ function collision() {
   setTimeout(function() {
     orb.color("green");
   }, 500);
-  backside.move(255, angles[currentAnglePoint++], orb);
-
+  backside.move(255,angles[currentAnglePoint%5], orb);
+  currentAnglePoint++;
   // ここまで
 }
 
