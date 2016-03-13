@@ -46,6 +46,19 @@ module.exports = {
       }
       orb.roll(speed, _deg);
     }
+  },
+  color: function(orb, color, time) {
+    var _c;
+    orb.getColor(function(err, data) {
+      // なぜかdata.colorは、16進数だが文字列として帰ってくるので、parseInt。
+      _c = parseInt(data.color);
+      orb.color(color);
+      if (typeof time !== "undefined") {
+        setTimeout(function() {
+          orb.color(_c);
+        }, time * 1000);
+      }
+    });
   }
 };
 
