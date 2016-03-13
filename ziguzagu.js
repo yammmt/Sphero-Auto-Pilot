@@ -18,7 +18,7 @@ function connect() {
   orb.color(orbDefaultColor);
   setTimeout(loop, loopInterval);
   // ここに処理を書きます
-  backside.move(255,angles[Math.max(currentAnglePoint++, angles.length)], orb);
+  backside.move(255, angles[Math.max(currentAnglePoint++, angles.length)], orb);
 
   orb.streamAccelerometer();
 
@@ -47,7 +47,7 @@ function collision() {
   setTimeout(function() {
     orb.color("green");
   }, 500);
-  backside.move(255,angles[Math.max(currentAnglePoint++, angles.length)], orb);
+  backside.move(255, angles[Math.max(currentAnglePoint++, angles.length)], orb);
   // ここまで
 }
 
