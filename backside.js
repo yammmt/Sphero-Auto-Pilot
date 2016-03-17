@@ -26,8 +26,9 @@ module.exports = {
     return orb;
   },
   move: function(speed, deg, orb) {
+    var _deg;
     if (typeof deg === "number") {
-      orb.roll(speed, deg);
+      _deg = deg;
     } else if (typeof deg === "string") {
       var _deg = 0;
       switch (deg) {
@@ -44,8 +45,9 @@ module.exports = {
           _deg = 0;
           break;
       }
-      orb.roll(speed, _deg);
     }
+    orb.roll(speed, _deg);
+    setMoveLoop(orb, speed, _deg);
   },
   color: function(orb, color, time) {
     var _c;
@@ -69,3 +71,16 @@ function raiseEvent(eventName) {
     });
   }
 }
+
+// (#15) orb.roll が、数秒後に止まらないようにする
+function setMoveLoop(orb, speed, deg) {
+  if (moveLoopId !== -1) {
+    clearTimeout(moveLoopId);
+  }
+  var loop = function() {
+    orb.roll(speed, deg);
+    moveLoopId = setTimeout(loop, 1000);
+  }
+  moveLoopId = setTimeout(loop, 1000);
+}
+var moveLoopId = -1;
