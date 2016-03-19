@@ -3,6 +3,7 @@ var sphero = require("sphero");
 var events = {};
 var moveLoopId = -1;
 var collisionCount = 0;
+var orb;
 module.exports = {
   addEventListener: function(eventName, fn) {
     if (typeof events[eventName] === "undefined") {
@@ -11,7 +12,7 @@ module.exports = {
     events[eventName].push(fn);
   },
   connect: function(port, callback) {
-    var orb = sphero(port);
+    orb = sphero(port);
     orb.connect(function() {
       console.log("準備開始");
       orb.startCalibration(); // 位置関係の補正
@@ -27,7 +28,7 @@ module.exports = {
     });
     return orb;
   },
-  move: function(speed, deg, orb) {
+  move: function(speed, deg) {
     var _deg = 0;
     if (typeof deg === "number") {
       _deg = deg;
@@ -49,7 +50,7 @@ module.exports = {
     }
     roll(orb, speed, _deg);
   },
-  color: function(orb, color, time) {
+  color: function(color, time) {
     orb.getColor(function(err, data) {
       // なぜかdata.colorは、16進数だが文字列として帰ってくるので、parseInt。
       var _c = parseInt(data.color);
