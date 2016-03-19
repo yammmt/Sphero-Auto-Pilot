@@ -30,7 +30,7 @@ module.exports = {
     if (typeof deg === "number") {
       _deg = deg;
     } else if (typeof deg === "string") {
-      var _deg = 0;
+      _deg = 0;
       switch (deg) {
         case "左":
           _deg = 270;
