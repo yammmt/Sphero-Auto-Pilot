@@ -26,11 +26,10 @@ module.exports = {
     return orb;
   },
   move: function(speed, deg, orb) {
-    var _deg;
+    var _deg = 0;
     if (typeof deg === "number") {
       _deg = deg;
     } else if (typeof deg === "string") {
-      _deg = 0;
       switch (deg) {
         case "左":
           _deg = 270;
