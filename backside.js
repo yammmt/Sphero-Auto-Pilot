@@ -50,17 +50,12 @@ module.exports = {
           break;
       }
     }
-    var loop = function() {
-      orb.roll(speed, _deg);
-      moveLoopId = setTimeout(loop, 1000);
-    }
-    loop();
+    roll(orb, speed, _deg);
   },
   color: function(orb, color, time) {
-    var _c;
     orb.getColor(function(err, data) {
       // なぜかdata.colorは、16進数だが文字列として帰ってくるので、parseInt。
-      _c = parseInt(data.color);
+      var _c = parseInt(data.color);
       orb.color(color);
       if (typeof time !== "undefined") {
         setTimeout(function() {
@@ -77,4 +72,11 @@ function raiseEvent(eventName) {
       i();
     });
   }
+}
+
+// 継続的に実行するためにラップする
+function roll(orb, speed, degree) {
+  clearTimeout(moveLoopId);
+  orb.roll(speed, degree);
+  moveLoopId = setTimeout(roll, 1000, orb, speed, degree);
 }
