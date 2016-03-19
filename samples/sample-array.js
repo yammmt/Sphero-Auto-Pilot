@@ -1,4 +1,4 @@
-var backside = require("./backside");
+var backside = require("./../backside");
 var keypress = require("keypress");
 
 // 自分の Sphero の ID に置き換える
@@ -18,14 +18,6 @@ function connect() {
   // ここに処理を書きます
   backside.move(255, angles[Math.min(currentAnglePoint++, angles.length - 1)], orb);
   // ここまで
-}
-
-// メインとなるループ処理（上のloopIntervalの間隔で呼び出されます）
-function loop() {
-  // ここに処理を書きます
-
-  // ここまで
-  setTimeout(loop, loopInterval);
 }
 
 // 衝突時に呼び出されます。
