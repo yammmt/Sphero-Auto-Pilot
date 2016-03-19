@@ -17,5 +17,5 @@ function collision(count) {
   // ここまで
 }
 
-orb = backside.connect(port, connect);
+backside.connect(port, connect);
 backside.addEventListener("collision", collision);

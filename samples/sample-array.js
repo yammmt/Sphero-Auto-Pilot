@@ -3,7 +3,6 @@ var keypress = require("keypress");
 
 // 自分の Sphero の ID に置き換える
 var port = "COM7";
-var orb = {};
 
 var currentAnglePoint = 0;
 var angles = [
@@ -14,7 +13,7 @@ var angles = [
 function connect() {
   backside.color("orange");
   // ここに処理を書きます
-  backside.move(199, angles[Math.min(currentAnglePoint++, angles.length - 1)], orb);
+  backside.move(199, angles[Math.min(currentAnglePoint++, angles.length - 1)]);
   // ここまで
 }
 
@@ -23,10 +22,10 @@ function collision(count) {
   // ここに処理を書きます
     
   // 配列で書くこともできるよ
-  backside.move(100, angles[Math.min(currentAnglePoint++, angles.length - 1)], orb);
+  backside.move(100, angles[Math.min(currentAnglePoint++, angles.length - 1)]);
   // ここまで
 }
 
-orb = backside.connect(port, connect);
+backside.connect(port, connect);
 backside.addEventListener("collision", collision);
 backside.addEventListener("loop", loop);
