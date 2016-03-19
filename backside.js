@@ -1,9 +1,13 @@
 // バックで環境設定などのややこしい処理をします。
 var sphero = require("sphero");
+var keypress = require("keypress");
+
 var events = {};
 var moveLoopId = -1;
 var collisionCount = 0;
 var orb;
+var keypressCallbacks = {};
+
 module.exports = {
   addEventListener: function(eventName, fn) {
     if (typeof events[eventName] === "undefined") {
@@ -16,12 +20,12 @@ module.exports = {
     orb.connect(function() {
       console.log("準備開始");
       orb.startCalibration(); // 位置関係の補正
-      setTimeout(function() {
+      setKeypressCallback("space", function() {
         console.log("準備終了");
         orb.finishCalibration();
         orb.detectCollisions(); // 衝突判定を有効化
         callback(orb);
-      }, 10000);
+      });
     });
     orb.on("collision", function() {
       raiseEvent("collision", collisionCount++);
@@ -83,3 +87,33 @@ function roll(orb, speed, degree) {
   orb.roll(speed, degree);
   moveLoopId = setTimeout(roll, 1000, orb, speed, degree);
 }
+
+function configureKeypress() {
+  // make `process.stdin` begin emitting "keypress" events
+  keypress(process.stdin);
+
+  // listen for the "keypress" event
+  process.stdin.on('keypress', function(ch, key) {
+    if (key && key.ctrl && key.name === 'c') {
+      console.log("exit");
+      process.stdin.pause();
+      process.exit();
+    }
+    if (typeof keypressCallbacks[key.name] !== "undefined") {
+      keypressCallbacks[key.name].forEach(i => {
+        i();
+      });
+    }
+  });
+
+  process.stdin.setRawMode(true);
+  process.stdin.resume();
+}
+
+function setKeypressCallback(key, callback) {
+  if (typeof keypressCallbacks[key] === "undefined") {
+    keypressCallbacks[key] = [];
+  }
+  keypressCallbacks[key].push(callback);
+}
+configureKeypress();
