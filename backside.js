@@ -2,7 +2,7 @@
 var sphero = require("sphero");
 var events = {};
 var moveLoopId = -1;
-
+var collisionCount = 0;
 module.exports = {
   addEventListener: function(eventName, fn) {
     if (typeof events[eventName] === "undefined") {
@@ -23,7 +23,7 @@ module.exports = {
       }, 10000);
     });
     orb.on("collision", function() {
-      raiseEvent("collision");
+      raiseEvent("collision", collisionCount++);
     });
     return orb;
   },
@@ -64,9 +64,14 @@ module.exports = {
 };
 
 function raiseEvent(eventName) {
+  var args = [];
+  for (var i = 0; i < arguments.length; i++) {
+    if (i === 0) continue;
+    args.push(arguments[i]);
+  }
   if (typeof events[eventName] !== "undefined") {
     events[eventName].forEach(i => {
-      i();
+      i.apply(this, args);
     });
   }
 }

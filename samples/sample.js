@@ -6,29 +6,14 @@ var port = "COM7";
 var orbDefaultColor = "orange";
 var loopInterval = 1000;
 var orb = {};
-var angles = [
-  "前", "右", "前", "左", "前"
-];
 var currentAnglePoint = 0;
-
-var graph = [];
 
 // 接続された時に呼び出されます。
 function connect() {
   orb.color(orbDefaultColor);
   setTimeout(loop, loopInterval);
   // ここに処理を書きます
-  backside.move(255, angles[Math.min(currentAnglePoint++, angles.length - 1)], orb);
-
-  orb.streamAccelerometer();
-
-  orb.on("accelerometer", function(data) {
-    if (Math.abs(data.xAccel.value[0]) < 1000) {
-      console.log("止まっている");
-    } else {
-      console.log("動いている");
-    }
-  });
+  backside.move(255, "前", orb);
   // ここまで
 }
 
@@ -43,18 +28,24 @@ function loop() {
 // 衝突時に呼び出されます。
 function collision(index) {
   // ここに処理を書きます
-  console.log(index);
+  // ぶつかったかの確認
+  backside.color(orb, "green", 0.5);
   if (index === 0) {
     // 1 回目のとき
+    backside.move(255, "右", orb);
   }
   if (index === 1) {
-    
+    // 2 回目のとき
+    backside.move(255, "前", orb);
   }
-  orb.color("red");
-  setTimeout(function() {
-    orb.color("green");
-  }, 500);
-  backside.move(255, angles[Math.min(currentAnglePoint++, angles.length - 1)], orb);
+  if (index === 2) {
+    // 3 回目のとき
+    backside.move(255, "左", orb);
+  }
+  if (index === 3) {
+    // 4 回目のとき
+    backside.move(255, "前", orb);
+  }
   // ここまで
 }
 
