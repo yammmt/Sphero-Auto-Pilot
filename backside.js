@@ -8,7 +8,7 @@ var collisionCount = 0;
 var orb;
 var keypressCallbacks = {};
 
-module.exports = {
+var backside = {
   addEventListener: function(eventName, fn) {
     if (typeof events[eventName] === "undefined") {
       events[eventName] = [];
@@ -25,10 +25,13 @@ module.exports = {
         orb.finishCalibration();
         orb.detectCollisions(); // 衝突判定を有効化
         callback(orb);
+        orb.on("collision", function() {
+          backside.color("green", 0.5);
+          raiseEvent("collision", collisionCount++);
+          // collisionCountは0始まりだけど、↑でインクリメントしてるからそのまま。
+          console.log((collisionCount) + "回目の衝突です");
+        });
       });
-    });
-    orb.on("collision", function() {
-      raiseEvent("collision", collisionCount++);
     });
     return orb;
   },
@@ -56,13 +59,15 @@ module.exports = {
   },
   color: function(color, time) {
     orb.getColor(function(err, data) {
-      // なぜかdata.colorは、16進数だが文字列として帰ってくるので、parseInt。
-      var _c = parseInt(data.color);
-      orb.color(color);
-      if (typeof time !== "undefined") {
-        setTimeout(function() {
-          orb.color(_c);
-        }, time * 1000);
+      if (data) {
+        // なぜかdata.colorは、16進数だが文字列として帰ってくるので、parseInt。
+        var _c = parseInt(data.color);
+        orb.color(color);
+        if (typeof time !== "undefined") {
+          setTimeout(function() {
+            orb.color(_c);
+          }, time * 1000);
+        }
       }
     });
   }
@@ -117,3 +122,5 @@ function setKeypressCallback(key, callback) {
   keypressCallbacks[key].push(callback);
 }
 configureKeypress();
+
+module.exports = backside;

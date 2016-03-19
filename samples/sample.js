@@ -9,7 +9,7 @@ var orb = {};
 function connect() {
   backside.color("orange");
   // ここに処理を書きます
-  backside.move(255, "前", orb);
+  backside.move(100, "前", orb);
   // ここまで
 }
 
@@ -17,7 +17,6 @@ function connect() {
 function collision(count) {
   // ここに処理を書きます
   // ぶつかったかの確認
-  backside.color(orb, "green", 0.5);
   if (count === 0) {
     // 1 回目のとき
     backside.move(255, "右", orb);

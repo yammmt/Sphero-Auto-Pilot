@@ -7,14 +7,13 @@ var port = "COM3";
 function connect() {
   backside.color("orange");
   // ここに処理を書きます
-  backside.move(50, "前");
+  backside.move(100, "前");
   // ここまで
 }
 
 // 衝突時に呼び出されます。
 function collision(count) {
   // ここに処理を書きます
-  backside.color("green", 1);
   // ここまで
 }
 
