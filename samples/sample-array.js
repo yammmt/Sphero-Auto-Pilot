@@ -19,7 +19,7 @@ function connect() {
 }
 
 // 衝突時に呼び出されます。
-function collision(index) {
+function collision(count) {
   // ここに処理を書きます
   // ぶつかったかの確認
   backside.color(orb, "green", 0.5);

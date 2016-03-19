@@ -14,23 +14,23 @@ function connect() {
 }
 
 // 衝突時に呼び出されます。
-function collision(index) {
+function collision(count) {
   // ここに処理を書きます
   // ぶつかったかの確認
   backside.color(orb, "green", 0.5);
-  if (index === 0) {
+  if (count === 0) {
     // 1 回目のとき
     backside.move(255, "右", orb);
   }
-  if (index === 1) {
+  if (count === 1) {
     // 2 回目のとき
     backside.move(255, "前", orb);
   }
-  if (index === 2) {
+  if (count === 2) {
     // 3 回目のとき
     backside.move(255, "左", orb);
   }
-  if (index === 3) {
+  if (count === 3) {
     // 4 回目のとき
     backside.move(255, "前", orb);
   }

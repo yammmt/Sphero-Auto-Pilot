@@ -12,7 +12,7 @@ function connect() {
 }
 
 // 衝突時に呼び出されます。
-function collision() {
+function collision(count) {
   // ここに処理を書きます
   backside.color("green", 1);
   // ここまで
