@@ -28,9 +28,6 @@ module.exports = {
     return orb;
   },
   move: function(speed, deg, orb) {
-    if (moveLoopId !== -1) {
-      clearTimeout(moveLoopId);
-    }
     var _deg = 0;
     if (typeof deg === "number") {
       _deg = deg;
