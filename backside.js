@@ -1,6 +1,8 @@
 // バックで環境設定などのややこしい処理をします。
 var sphero = require("sphero");
 var events = {};
+var moveLoopId = -1;
+
 module.exports = {
   addEventListener: function(eventName, fn) {
     if (typeof events[eventName] === "undefined") {
@@ -26,6 +28,9 @@ module.exports = {
     return orb;
   },
   move: function(speed, deg, orb) {
+    if (moveLoopId !== -1) {
+      clearTimeout(moveLoopId);
+    }
     var _deg = 0;
     if (typeof deg === "number") {
       _deg = deg;
@@ -45,8 +50,11 @@ module.exports = {
           break;
       }
     }
-    orb.roll(speed, _deg);
-    setMoveLoop(orb, speed, _deg);
+    var loop = function() {
+      orb.roll(speed, _deg);
+      moveLoopId = setTimeout(loop, 1000);
+    }
+    loop();
   },
   color: function(orb, color, time) {
     var _c;
@@ -70,16 +78,3 @@ function raiseEvent(eventName) {
     });
   }
 }
-
-// (#15) orb.roll が、数秒後に止まらないようにする
-function setMoveLoop(orb, speed, deg) {
-  if (moveLoopId !== -1) {
-    clearTimeout(moveLoopId);
-  }
-  var loop = function() {
-    orb.roll(speed, deg);
-    moveLoopId = setTimeout(loop, 1000);
-  }
-  moveLoopId = setTimeout(loop, 1000);
-}
-var moveLoopId = -1;
