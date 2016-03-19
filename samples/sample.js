@@ -3,15 +3,11 @@ var keypress = require("keypress");
 
 // 自分の Sphero の ID に置き換える
 var port = "COM7";
-var orbDefaultColor = "orange";
-var loopInterval = 1000;
 var orb = {};
-var currentAnglePoint = 0;
 
 // 接続された時に呼び出されます。
 function connect() {
-  orb.color(orbDefaultColor);
-  setTimeout(loop, loopInterval);
+  backside.color("orange");
   // ここに処理を書きます
   backside.move(255, "前", orb);
   // ここまで

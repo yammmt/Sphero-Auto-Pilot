@@ -3,9 +3,8 @@ var keypress = require("keypress");
 
 // 自分の Sphero の ID に置き換える
 var port = "COM7";
-var orbDefaultColor = "orange";
-var loopInterval = 1000;
 var orb = {};
+
 var currentAnglePoint = 0;
 var angles = [
   "前", "右", "前", "左", "前"
@@ -13,8 +12,7 @@ var angles = [
 
 // 接続された時に呼び出されます。
 function connect() {
-  orb.color(orbDefaultColor);
-  setTimeout(loop, loopInterval);
+  backside.color("orange");
   // ここに処理を書きます
   backside.move(255, angles[Math.min(currentAnglePoint++, angles.length - 1)], orb);
   // ここまで

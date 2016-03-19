@@ -2,12 +2,11 @@ var backside = require("./backside");
 
 // 自分の Sphero の ID に置き換える
 var port = "COM3";
-var orbDefaultColor = "orange";
 var orb = {};
 
 // 接続された時に呼び出されます。
 function connect() {
-  backside.color(orb, orbDefaultColor);
+  backside.color(orb, "orange");
   // ここに処理を書きます
   backside.move(50, "前", orb);
   // ここまで
